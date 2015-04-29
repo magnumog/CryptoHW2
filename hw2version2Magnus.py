@@ -1,3 +1,5 @@
+import random
+from math import *
 
 def MonPro(a,b):
 	t = a*b
@@ -23,19 +25,20 @@ def MonExp(M,e,n):
 
 def bin(number):
 	if number == 0:
-        return "0"
-    s = ''
-    while number:
-        if number & 1 == 1:
-            s = "1" + s
-        else:
-            s = "0" + s
-        number >>= 1
-    return s
+		return "0"
+    	s = ''
+    	while number:
+        	if number & 1 == 1:
+       			s = "1" + s
+        	else:
+            		s = "0" + s
+        	number >>= 1
+    	return s
 
-n = 0
-#d=wtf
-r = 2**(len(bin(n)))
+M=10
+n=29
+d=23
+r = 2**(len(bin(d)))
 gcd, rInverse, nPrime = egcd(r,n)
 
 def egcd(a,b):
@@ -47,5 +50,39 @@ def egcd(a,b):
     gcd = b
     return gcd, x, y
 
+def solveRSA():
+	returnValues = []
+	returnMessage = []
+	for i in range(1,100):
+		M = random.randint(1000,10000)
+		message, value = MonExp(M,d,n)
+		returnValues.append(value)
+		returnMessage.append(message)
+	
+	trueList = []
+	falseList = []
+	for i in range(0,len(returnValues)):
+		true=0
+		false=0
+		for j in range(0,len(returnValues[i])):
+			if(returnValues[j][i]=True):
+				true = true+1
+			else:
+				false = false+1
+		trueList.append(true)
+		falseList.append(false)
+	
+	number = getNumber(trueList,falseList)
 
+def getNumber(trueList,falseList)
+	number = ''
+	for i in range(0,len(trueList)):
+		true=trueList[i]
+		false=falseList[i]
+		if(true>false):
+			number = '1' + number
+		else:
+			number = '0' + number
+	return number
+				
 
