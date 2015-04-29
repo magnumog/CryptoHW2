@@ -45,38 +45,39 @@ def egcd(a, b):
     return gcd, x, y
 
 def solveRSA():
-	returnValues = []
-	returnMessage = []
-	for i in range(1,100):
-		M = random.randint(1000,10000)
-		message, value = MonExp(M,bin(d),n)
-		returnValues.append(value)
-		returnMessage.append(message)
-	
-	trueList = []
-	falseList = []
-	for i in range(0,len(returnValues[0])):
-		true=0
-		false=0
-		for j in range(0,len(returnValues)):
-			if(returnValues[j][i]==True):
-				true = true+1
-			else:
-				false = false+1
-		trueList.append(true)
-		falseList.append(false)
-    number = getNumber(trueList,falseList)
-    return trueList,falseList
+        returnValues = []
+        returnMessage = []
+        for i in range(0,100):
+                M = random.randint(1000,10000)
+                message, value = MonExp(M,bin(d),n)
+                returnValues.append(value)
+                returnMessage.append(message)
+
+        trueList = []
+        falseList = []
+        for i in range(0,len(returnValues[0])):
+                true=0
+                false=0
+                for j in range(0,len(returnValues)):
+                        if(returnValues[j][i]==True):
+                                true = true+1
+                        else:
+                                false = false+1
+                trueList.append(true)
+                falseList.append(false)
+        number = getNumber(trueList,falseList)
+        #print(int(number,2))
+        return trueList,falseList,number,int(number,2)
 
 def getNumber(trueList,falseList):
-	number = ''
-	for i in range(0,len(trueList)):
+	number = '1'
+	for i in range(1,len(trueList)):
 		true=trueList[i]
 		false=falseList[i]
 		if(true>false):
-			number = '1' + number
+			number = number +'1'
 		else:
-			number = '0' + number
+			number = number + '0'
 	return number
 
 def Euclidian(r,n):
