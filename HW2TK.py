@@ -4,6 +4,7 @@ def monPro(a,b):
 	t = a * b
 	m = (t * _n) % r
 	u = (t + m * n)/r
+	#print u , n
 	if u >= n:
 		return u - n, True
 	else:
@@ -19,6 +20,7 @@ def monExp(m, e, n):
 		#result.append(temp)
 		if i == "1":
 			_c,temp = monPro(_m, _c)
+			#result.append(temp)
 		
 		result.append(temp)
 	c, temp = monPro(_c, 1)
@@ -40,7 +42,7 @@ def generateSignatures():
 	counter = 0
 
 	while counter<100:
-		m = random.randint(100,100000)
+		m = random.randint(100000,100000000)
 		#m = 425
 		rsa.append(monExp(m, d, n))
 		mlist.append(m)
@@ -77,18 +79,57 @@ def solve():
 	#print key
 
 
+def test ():
+
+	st = []
+	sf = []
+	temp = []
+	tempFailRSA = 0
+	tempTrueRSA = 0
+	tempFail2 = 0
+	tempTrue2 = 0
+
+	for x in mlist:
+		temp.append(monExp(x, "11", n))
+		#print temp
+	
+
+	for x in rsa:
+		if x[1] == True:
+			tempTrueRSA += 1
+		elif x[1] == False:
+			tempFailRSA += 1
+	if tempTrueRSA > tempFailRSA:
+		print tempTrueRSA, tempFailRSA
+	elif tempFailRSA >= tempTrueRSA:
+		print tempTrueRSA, tempFailRSA
+
+	for x in temp:
+		if x[1] == True:
+			tempTrue2 += 1
+		elif x[1] == False:
+			tempFail2 += 1
+	if tempTrue2 > tempFail2:
+		print tempTrue2, tempFail2
+	elif tempFail2 >= tempTrue2:
+		print tempTrue2, tempFail2
+
+
 rsa = []
 mlist = []
-#m = 65	
-n = 10201
-d = str(bin(101))[2:]
+m = 65	
+n = 3233
+d = str(bin(17))[2:]
 r = 2**(len(bin(n))-2)
+print r
 
 gcd, _r, _n = egcd(r, n)
 
 if gcd == 1: 
 	_n = ((r * _r) - 1) / n
+
 	rsa, mlist = generateSignatures()
 	solve()
+	#test()
 	#for x in rsa:
 		#print x
