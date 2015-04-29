@@ -84,35 +84,50 @@ def test ():
 	st = []
 	sf = []
 	temp = []
-	tempFailRSA = 0
-	tempTrueRSA = 0
-	tempFail2 = 0
-	tempTrue2 = 0
+	# tempFailRSA = 0
+	# tempTrueRSA = 0
+	# tempFail2 = 0
+	# tempTrue2 = 0
+	testString = ""
+	key = "1"
+	while len(key) < (len(bin(n))-1):
+		tempFailRSA = 0
+		tempTrueRSA = 0
+		tempFail2 = 0
+		tempTrue2 = 0
+		testString = key + "1"
+		for x in mlist:
+			temp.append(monExp(x, testString, n))
+			#print temp
+		
 
-	for x in mlist:
-		temp.append(monExp(x, "11", n))
-		#print temp
-	
+		for x in rsa:
+			if x[1] == True:
+				tempTrueRSA += 1
+			elif x[1] == False:
+				tempFailRSA += 1
+		if tempTrueRSA > tempFailRSA:
+			print tempTrueRSA, tempFailRSA
+		elif tempFailRSA >= tempTrueRSA:
+			print tempTrueRSA, tempFailRSA
 
-	for x in rsa:
-		if x[1] == True:
-			tempTrueRSA += 1
-		elif x[1] == False:
-			tempFailRSA += 1
-	if tempTrueRSA > tempFailRSA:
-		print tempTrueRSA, tempFailRSA
-	elif tempFailRSA >= tempTrueRSA:
-		print tempTrueRSA, tempFailRSA
+		for x in temp:
+			if x[-2] == True:
+				tempTrue2 += 1
+			elif x[-2] == False:
+				tempFail2 += 1
+		if tempTrue2 > tempFail2:
+			print tempTrue2, tempFail2
+			key += "1"
+		elif tempFail2 >= tempTrue2:
+			print tempTrue2, tempFail2
+			key += "0"
 
-	for x in temp:
-		if x[1] == True:
-			tempTrue2 += 1
-		elif x[1] == False:
-			tempFail2 += 1
-	if tempTrue2 > tempFail2:
-		print tempTrue2, tempFail2
-	elif tempFail2 >= tempTrue2:
-		print tempTrue2, tempFail2
+	print key
+
+
+
+
 
 
 rsa = []
@@ -129,7 +144,7 @@ if gcd == 1:
 	_n = ((r * _r) - 1) / n
 
 	rsa, mlist = generateSignatures()
-	solve()
-	#test()
+	#solve()
+	test()
 	#for x in rsa:
 		#print x
