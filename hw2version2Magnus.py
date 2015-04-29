@@ -23,26 +23,20 @@ def MonExp(M,e,n):
 	returnValues.append(value)
 	return x,returnValues
 
-def bin(number):
-	if number == 0:
-		return "0"
-    	s = ''
-    	while number:
-        	if number & 1 == 1:
-       			s = "1" + s
-        	else:
-            		s = "0" + s
-        	number >>= 1
-    	return s
+def bin(i):
+    if i == 0:
+        return "0"
+    s = ''
+    while i:
+        if i & 1 == 1:
+            s = "1" + s
+        else:
+            s = "0" + s
+        i >>= 1
+    return s
 
-M=10
-n=29
-d=23
-r = 2**(len(bin(d)))
-gcd, rInverse, nPrime = egcd(r,n)
-
-def egcd(a,b):
-	x,y, u,v = 0,1, 1,0
+def egcd(a, b):
+    x,y, u,v = 0,1, 1,0
     while a != 0:
         q, r = b//a, b%a
         m, n = x-u*q, y-v*q
@@ -55,26 +49,26 @@ def solveRSA():
 	returnMessage = []
 	for i in range(1,100):
 		M = random.randint(1000,10000)
-		message, value = MonExp(M,d,n)
+		message, value = MonExp(M,bin(d),n)
 		returnValues.append(value)
 		returnMessage.append(message)
 	
 	trueList = []
 	falseList = []
-	for i in range(0,len(returnValues)):
+	for i in range(0,len(returnValues[0])):
 		true=0
 		false=0
-		for j in range(0,len(returnValues[i])):
-			if(returnValues[j][i]=True):
+		for j in range(0,len(returnValues)):
+			if(returnValues[j][i]==True):
 				true = true+1
 			else:
 				false = false+1
 		trueList.append(true)
 		falseList.append(false)
-	
-	number = getNumber(trueList,falseList)
+    number = getNumber(trueList,falseList)
+    return trueList,falseList
 
-def getNumber(trueList,falseList)
+def getNumber(trueList,falseList):
 	number = ''
 	for i in range(0,len(trueList)):
 		true=trueList[i]
@@ -84,5 +78,34 @@ def getNumber(trueList,falseList)
 		else:
 			number = '0' + number
 	return number
-				
+
+def Euclidian(r,n):
+    x=r*modinv(r,n)
+    y=x-1
+    k=y/n
+    return k
+
+def egcd(a, b):
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, y, x = egcd(b % a, a)
+        return (g, x - (b // a) * y, y)
+
+def modinv(r, n):
+    gcd, x, y = egcd(r, n)
+    if gcd != 1:
+        return None
+    else:
+        return x % n
+M=10
+n=29
+d=23
+r = 2**(len(bin(d)))
+#gcd, rInverse, nPrime = egcd(r,n)
+nPrime=Euclidian(r,n)
+
+def main():
+	#print(MonExp(10,bin(23),29))
+	print(solveRSA())
 
